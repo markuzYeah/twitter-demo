@@ -1,0 +1,17 @@
+
+.well.well-small(ng-repeat="tweet in data") 
+  {{tweet.created_at | date:'EEEE, MMM d hh:mm:ss a' }}
+  span.pull-right
+    i.icon-plus-sign(ng-click='console.log(clicked)')
+  blockquote
+    p( ng-bind-html-unsafe="tweet.text | getLinks")
+    small.pull-right
+      cite {{tweet.user.screen_name}} 
+//
+  dl.dl-horizontal
+    dt name: 
+    dd {{tweet.user.name}}
+    dt place: 
+    dd {{tweet.user.location}}
+
+

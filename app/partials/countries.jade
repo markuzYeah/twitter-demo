@@ -1,0 +1,8 @@
+
+.div(ng-repeat="code in data")
+  .well.well-small.text-center
+    .div
+      {{code}}
+    .div(id="country-stat-{{$index}}")
+      .badge.badge-info {{$index | getStat}}
+

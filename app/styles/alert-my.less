@@ -1,0 +1,11 @@
+
+@myText: (@infoText - #222);
+@myBackground: @infoBackground; 
+@myBorder: darken(spin(@myBackground, -10), 7%);
+
+.alert-my {
+  background-color: @myBackground;
+  border-color: @myBorder;
+  color: @myText;
+}
+

@@ -1,0 +1,36 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+
+# OS or Editor folders
+.DS_Store
+.cache
+.project
+.settings
+.tmproj
+nbproject
+Thumbs.db
+dump.rdb
+
+# twiiter config
+twitterConfig.js
+
+# NPM packages folder.
+node_modules/
+npm-debug.log
+
+# other directories
+tmp/
+#server/
+.tmp/
+app/components/
+dist/
+

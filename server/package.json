@@ -1,0 +1,16 @@
+{
+  "name": "",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "express": "3.2.0",
+    "jade": "~0.29.x",
+    "request" : "~2.20.x",
+    "socket.io": "~0.9.x",
+    "lodash": "~1.2.x",
+    "less-middleware": "~0.1.x"
+  }
+}
