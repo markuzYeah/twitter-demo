@@ -5,16 +5,20 @@
 
 "use strict";
 
-var express = require('express')
-, routes = require('./routes')
+var domain = require('domain')
 , http = require('http')
 , path = require('path')
+, express = require('express')
 , socket = require('socket.io')
 , redis = require('redis')
 , EventEmitter2 = require('eventemitter2').EventEmitter2
 
-, twitterClient = require('../etc/twitterClient')
-, redisClient = redis.createClient()
+, routes = require('./routes')
+, manageErr = require('../manageErr')
+
+, thisDomain = domain.create()
+, O = Object
+, redisClient 
 , serverEvt
 ;
 
@@ -85,32 +89,42 @@ function createServer(){
   return evt
 }
 
-serverEvt = createServer()
+thisDomain.on('error', manageErr)
 
-serverEvt.on('socketConn', function(socket){
-  serverEvt.on('tweets', function(tweets){
-    socket.volatile.emit('send:data', tweets)
-  }) 
-})
-
-
-redisClient.on('error', function(err){
-  if (err) throw err;
-})
-
-redisClient.on('ready', function(){
-  setInterval(function(){
-    redisClient.lrange('L:twitterDump', 0, 20, function(err, data){
-      data = data.map(function(tweet){
-        return JSON.parse(tweet)
+thisDomain.run(function(){
+  redisClient = redis.createClient()
+  serverEvt = createServer()
+  
+  serverEvt.on('socketConn', function(socket){
+    serverEvt.once('tweets', function(tweets){
+      socket.volatile.emit('send:data', tweets)
+    }) 
+  })
+  
+  /*
+  redisClient.on('error', function(err){
+    // the error
+    //console.log('HHHH', err.message)
+    if (err) throw err;
+  })
+  */
+  
+  redisClient.on('ready', function(){
+    setInterval(function(){
+      redisClient.lrange('L:twitterDump', 0, 20, function(err, data){
+        data = data.map(function(tweet){
+          return JSON.parse(tweet)
+        })
+        serverEvt.emit('tweets', data)
       })
-      serverEvt.emit('tweets', data)
-    })
-    // no need to have more then 1000
-    redisClient.ltrim('L:twitterDump', 0, 1000)
-  }, 500)
-})
+      // no need to have more then 1000
+      redisClient.ltrim('L:twitterDump', 0, 1000)
+    }, 500)
+  })
+  
 
+
+})
 
 
 

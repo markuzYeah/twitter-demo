@@ -279,7 +279,7 @@
 
 // 1200px min
 @gridColumnWidth1200:     70px;
-@gridGutterWidth1200:     10px;
+@gridGutterWidth1200:     5px;
 @gridRowWidth1200:        (@gridColumns * @gridColumnWidth1200) + (@gridGutterWidth1200 * (@gridColumns - 1));
 
 // 768px-979px
@@ -290,7 +290,12 @@
 
 // Fluid grid
 // -------------------------
-@fluidGridColumnWidth:    percentage(@gridColumnWidth/@gridRowWidth);
+//@fluidGridColumnWidth:    percentage(@gridColumnWidth/@gridRowWidth);
+// 
+// needed to substract 0.001% of the width, to make the spans behave
+// right. cool hack to stop a weird flickering
+//
+@fluidGridColumnWidth:    (percentage(@gridColumnWidth/@gridRowWidth) - 0.001);
 @fluidGridGutterWidth:    percentage(@gridGutterWidth/@gridRowWidth);
 
 // 1200px min
