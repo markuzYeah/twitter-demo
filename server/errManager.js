@@ -14,8 +14,13 @@ function manageRedisErr(err){
 
 module.exports = function(err){
   var redisRegEx = /^Redis/
+  , twitterRegEx
   ;
   if (redisRegEx.test(err.message)){ return manageRedisErr(err) }
+
+  if (err.code === 'MODULE_NOT_FOUND'){
+    throw err
+  }
 }
 
 
