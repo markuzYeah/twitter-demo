@@ -38,7 +38,7 @@ function createServer(){
   })
 
   // all environments
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 3001);
   //app.set('views', __dirname + '/views');
   //app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -50,20 +50,18 @@ function createServer(){
   app.use(app.router);
   //app.use(require('less-middleware')({ src: __dirname + '/public' }));
   
-  // development only
-  if ('dev' == app.get('env')) {
-    var pub = path.join(__dirname, '../../.tmp')
-    ;
-    app.use(express.errorHandler());
-    app.use(express.static(pub))
-  }
-
   if ('prod' == app.get('env')) {
     var pub = path.join(__dirname, '../../dist')
     ;
     app.use(express.errorHandler());
     app.use(express.static(pub))
-
+  }
+  else {
+    // development only
+    var pub = path.join(__dirname, '../../.tmp')
+    ;
+    app.use(express.errorHandler());
+    app.use(express.static(pub))
   }
   
   app.get('/', routes.index);
