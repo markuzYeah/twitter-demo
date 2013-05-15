@@ -7,6 +7,8 @@ window.APP
     // http://stackoverflow.com/questions/2099892/extracting-1-or-more-hyperlinks-from-paragraph-text-in-javascript-using-regular
     //
     function parseText(text){
+      if (!text){ return text }
+
       var urlPattern = "(https?|ftp)://(www\\.)?(((([a-zA-Z0-9.-]+\\.){1,}[a-zA-Z]{2,4}|localhost))|((\\d{1,3}\\.){3}(\\d{1,3})))(:(\\d+))?(/([a-zA-Z0-9-._~!$&'()*+,;=:@/]|%[0-9A-F]{2})*)?(\\?([a-zA-Z0-9-._~!$&'()*+,;=:/?@]|%[0-9A-F]{2})*)?(#([a-zA-Z0-9._-]|%[0-9A-F]{2})*)?"
       ;
 

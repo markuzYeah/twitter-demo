@@ -1,6 +1,7 @@
 
 // Demonstrate how to register services
 // In this case it is a simple value service.
+//
 //angular.module('clorideApp', []).
 "use strict";
 window.APP
@@ -17,6 +18,7 @@ window.APP
         });
       },
       emit: function (eventName, data, callback) {
+        console.log('aaaaa', data)
         socket.emit(eventName, data, function () {
           var args = arguments;
           $rootScope.$apply(function () {
