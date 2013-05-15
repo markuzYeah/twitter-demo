@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-cd $HOME/twitter-demo
+cd $HOME/work/twitter-demo
 
 forever start -a -c sh sh/grunt-server.sh
 forever start -a -c sh sh/redis.sh
