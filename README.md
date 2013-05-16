@@ -2,7 +2,7 @@
 
 This app demostrates how to use several modern nodejs projects to quickly prototype a simple web application.
 
-### TODO
+### TODO:
 There is so much that needs to be done that is not even funny :)
 
 - better angularjs routing. There is no need to refresh the whole hero-unit whenever there is a route change
