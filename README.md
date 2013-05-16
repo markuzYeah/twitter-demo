@@ -17,5 +17,6 @@ There is so much that needs to be done that is not even funny :)
 
 - Add to new icons at the navbar. A preferences and a about icon and have the technologies used being displayed in the about icon. The preference icon would allow a user to configure the application behavior, things like how often the tweets "snapshots" should refresh and how many tweets should be displayed at a single digest cycle.
 
+- The + sign at the top right, once clicked, should expand and display all the metadata of the tweet. This metadata's style should be like javascript object pretty print.
 
 
