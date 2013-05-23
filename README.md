@@ -7,6 +7,8 @@ There is so much that needs to be done that is not even funny :)
 
 - better angularjs routing. There is no need to refresh the whole hero-unit whenever there is a route change
 
+- For some reason, the twitter socket hangs after a few days, right some detection code and restart the twitter worker whenever needed.
+
 - have cheanges in angularjs' routes be better reflected in the expressjs routes. Eg.: if a user change the refresh rate to 1 min, then the express server app should push tweets updates once every minute. If a user changed to 5 sec, the push rate should reflect this change.
 
 - At the right and left bar, the city and country counter should display the number of tweets per second from that particular location, this feature is currently not implemented.
