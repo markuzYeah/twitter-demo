@@ -124,9 +124,7 @@ domain.run(function(){
           return JSON.parse(tweet)
         })
        
-        setInterval(function(){
-          twitterHealth(data)
-        }, 1000)
+        setInterval(function(){ twitterHealth(data) },( 1000 * 60))
 
         serverEvt.emit('tweets', data)
       })
