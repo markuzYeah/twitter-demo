@@ -13,7 +13,7 @@ var domain = require('domain').create()
 , redis = require('redis')
 , EventEmitter2 = require('eventemitter2').EventEmitter2
 
-, routes = require('./routes')
+, routes = require('../routes')
 , errManager = require('../errManager')
 
 , O = Object
@@ -22,7 +22,7 @@ var domain = require('domain').create()
 ;
 
 
-function createServer(){
+function createServerEvt(){
   var app = express()
   , exServer = http.createServer(app)
   , io = socket.listen(exServer)
@@ -80,11 +80,33 @@ function createServer(){
   return evt
 }
 
+var twitterHealth = (function(){
+  var prevData = JSON.stringify(['prevData'])
+  var masterPid = process.env.NODE_MASTER_PID
+  
+  return function(curData){
+    curData = JSON.stringify(curData)
+
+    if (prevData === curData){
+      console.log('\n==========', new Date(), '==========\n')
+      console.log('master node reset: twitter socket hanging')
+      console.log('previous tweet data:', JSON.parse(prevData)[0])
+      console.log('\n================\n')
+      console.log('current tweet data:', JSON.parse(curData)[0])
+      return process.kill(masterPid, 'SIGINT')
+    }
+    
+    prevData = curData
+
+  }
+}());
+
 domain.on('error', errManager)
 
 domain.run(function(){
+
   redisClient = redis.createClient()
-  serverEvt = createServer()
+  serverEvt = createServerEvt()
   
   serverEvt.on('socketConn', function(socket){
     serverEvt.on('tweets', function(tweets){
@@ -94,11 +116,18 @@ domain.run(function(){
   })
   
   redisClient.on('ready', function(){
+    var oldData = JSON.stringify(['oldData'])
+
     setInterval(function(){
       redisClient.lrange('L:twitterDump', 0, 20, function(err, data){
         data = data.map(function(tweet){
           return JSON.parse(tweet)
         })
+       
+        setInterval(function(){
+          twitterHealth(data)
+        }, 1000)
+
         serverEvt.emit('tweets', data)
       })
       // no need to have more then 1000
