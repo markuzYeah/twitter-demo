@@ -114,6 +114,7 @@ domain.run(function(){
     serverEvt.on('tweets', function(tweets){
       if (counter++ >= 200){
         console.log('sending...', new Date())
+        counter = 0
       }
       socket.volatile.emit('send:data', tweets)
     }) 
