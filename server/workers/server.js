@@ -107,10 +107,14 @@ domain.run(function(){
 
   redisClient = redis.createClient()
   serverEvt = createServerEvt()
+
+  var counter = 0
   
   serverEvt.on('socketConn', function(socket){
     serverEvt.on('tweets', function(tweets){
-      console.log('sending...', new Date())
+      if (counter++ >= 200){
+        console.log('sending...', new Date())
+      }
       socket.volatile.emit('send:data', tweets)
     }) 
   })
@@ -119,12 +123,12 @@ domain.run(function(){
     var oldData = JSON.stringify(['oldData'])
 
     setInterval(function(){
-      redisClient.lrange('L:twitterDump', 0, 20, function(err, data){
+      redisClient.lrange('L:twitterDump', 0, 7, function(err, data){
         data = data.map(function(tweet){
           return JSON.parse(tweet)
         })
        
-        setInterval(function(){ twitterHealth(data) },( 1000 * 60))
+        //setInterval(function(){ twitterHealth(data) },( 1000 * 60))
 
         serverEvt.emit('tweets', data)
       })
