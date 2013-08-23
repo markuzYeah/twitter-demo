@@ -108,11 +108,14 @@ domain.run(function(){
   redisClient = redis.createClient()
   serverEvt = createServerEvt()
 
-  var counter = 0
+  var counter = -1
   
   serverEvt.on('socketConn', function(socket){
     serverEvt.on('tweets', function(tweets){
-      if (counter++ >= 200){
+      if (counter === -1){
+        console.log('sending...', new Date())
+      }
+      if (counter++ >= 50){
         console.log('sending...', new Date())
         counter = 0
       }
