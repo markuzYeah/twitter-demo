@@ -10,6 +10,6 @@ sleep 2
 forever start  --minUpTime 1 server/main.js 
 
 # 600_000 = 10 mins
-forever start  --minUpTime 1 --spinSleepTime 600000 -c sh sh/restarter.sh
+forever start  --minUpTime 1 --spinSleepTime 300000 -c sh sh/restarter.sh
 
 forever list

@@ -127,7 +127,7 @@ domain.run(function(){
     var oldData = JSON.stringify(['oldData'])
 
     setInterval(function(){
-      redisClient.lrange('L:twitterDump', 0, 7, function(err, data){
+      redisClient.lrange('L:twitterDump', 0, 11, function(err, data){
         data = data.map(function(tweet){
           return JSON.parse(tweet)
         })
